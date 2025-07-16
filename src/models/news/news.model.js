@@ -8,8 +8,10 @@ const newsSchema = new Schema(
     },
     desc: {
     type: String, required: true
-    }
-
+    },
+    image: {
+      type: String, required: true
+      }
   }, {
   timestamps: true, versionKey: false
 })
