@@ -1,6 +1,10 @@
 const { NewsModel } = require('../../models/news/news.model')
+const { SaveFileModel } = require('../../models/save-file/save-file.model.js')
 const { HttpException } = require('../../utils/http-exception.js')
 const { StatusCodes } = require("http-status-codes")
+const fs = require("fs")
+const path = require("path")
+const { error } = require('console')
 
 class NewsController {
 	// getAll
@@ -19,8 +23,7 @@ class NewsController {
 	}
 	// add
 	static add = async (req, res) => {
-		const { title, desc } = req.body
-		const { filename } = req.file
+		const { title, desc, image } = req.body
 
 		const existingNews = await NewsModel.findOne({ title })
 
@@ -29,13 +32,19 @@ class NewsController {
 				StatusCodes.CONFLICT,
 				"News with this title already exists!")
 		}
+		const save_file = await SaveFileModel.findOne({ file_path: image })
+		if (!save_file) {
+			throw new HttpException(StatusCodes.BAD_REQUEST, "Image  file not found")
 
+		}
 		await NewsModel.create({
 			title,
 			desc,
-			image: "uploads/images/" + filename
+			image,
 		})
 		res.status(StatusCodes.CREATED).json({ success: true, msg: "news created!" })
+
+		await save_file.updateOne({ is_use: true, where_used: "news" })
 	};
 	//  update
 	static update = async (req, res) => {
@@ -77,9 +86,13 @@ class NewsController {
 		// await NewsModel.findByIdAndDelete(id) // 1 - usuli 
 		await news.deleteOne() // 2 - usuli 
 
+   await SaveFileModel.updateOne(
+		{file_path: news.image},
+		{is_use: false, where_used: ""}
+	)
+
 		res.status(200).json({ success: true, msg: "News deleted" })
 	}
 }
-
 
 module.exports = { NewsController }	

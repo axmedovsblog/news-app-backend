@@ -6,7 +6,6 @@
 
 const express = require("express")
 const { port } = require('./utils/secret.js')
-const { newsRouter } = require('./routes/news/news.route.js')
 const { main_roter } = require('./routes/index.js')
 const { ConnectdB } = require('./utils/config.database.js')
 const { errorMiddleware } = require('./middlewares/error.middleware.js')

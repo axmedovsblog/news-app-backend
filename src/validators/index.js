@@ -1,7 +1,7 @@
 // validatorlar 
 
 const { validationResult } = require("express-validator")
-const httpException = require('../utils/http-exception')
+const {HttpException} = require('../utils/http-exception')
 const { StatusCodes } = require('http-status-codes')
 
 const expressValidate = (req, res, next) => {
@@ -19,7 +19,7 @@ const expressValidate = (req, res, next) => {
 	// return res.status(422).json({succsess: false, msg: messages})
 
 	// 2 - usul bu 
-	throw new httpException(StatusCodes.UNPROCESSABLE_ENTITY, messages.trim())
+	throw new HttpException(StatusCodes.UNPROCESSABLE_ENTITY, messages.trim())
 }
 
 

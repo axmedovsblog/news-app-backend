@@ -6,6 +6,8 @@ class NewsValidator {
 		body('title', 'Title must be string.').isString(),
 		body('desc', 'Desc is required.').notEmpty(),
 		body('desc', 'Desc must be string.').isString(),
+		body('image', 'Image is required.').notEmpty(),
+		body('image', 'Image must be string.').isSlug(),
 	];
 	static getById = () => [
 		param('id', 'ID must be a valid MongoDB ObjectId. ').isMongoId()

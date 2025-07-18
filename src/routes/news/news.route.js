@@ -5,8 +5,6 @@ const newsRouter = new Router()
 
 const { expressValidate } = require("../../validators/index.js")
 const { NewsValidator } = require("../../validators/news/news.validator.js")
-const { NewsModel } = require('../../models/news/news.model.js')
-const { uploadFile } = require('../../utils/file-upload.js')
 
 newsRouter.get(
 	"/get-all",
@@ -20,9 +18,8 @@ newsRouter.get(
 )
 newsRouter.post(
 	"/add",
-	// NewsValidator.add(),
-	// expressValidate,
-	uploadFile.single("image"),
+	NewsValidator.add(),
+	expressValidate,
 	NewsController.add
 )
 newsRouter.put(
