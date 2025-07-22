@@ -1,4 +1,4 @@
-const { S3Client } = require("@aws-sdk/client-s3")
+const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3")
 const { Upload } = require("@aws-sdk/lib-storage")
 const {
 	AWS_ACCSESS_KEY_ID,
@@ -35,8 +35,24 @@ const uploadFileS3 = async (key, buffer) => {
 	} catch (error) {
 		console.error("Error uploading file ", error)
 	}
-}
+};
+const deleteFileS3 = async (location) => {
+  try {
+    if (location) {
+      const key = location.split("s3.twcstorage.ru/")[1];
+      await s3Client.send(
+        new DeleteObjectCommand({
+          Bucket: AWS_BUCKET_NAME,
+          Key: key,
+        })
+      );
+    }
+  } catch (error) {
+    console.error("Error deleting file:", error);
+  }
+};
 
 module.exports = {
-	uploadFileS3
+	uploadFileS3,
+	deleteFileS3
 }

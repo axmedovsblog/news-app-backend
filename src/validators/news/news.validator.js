@@ -17,6 +17,7 @@ class NewsValidator {
 		param('id', 'ID must be a valid MongoDB ObjectId. ').isMongoId(),
 		body('title', 'Title must be string.').optional().isString(),
 		body('desc', 'Desc must be string.').optional().isString(),
+		body('image', 'Image must be string.').isURL(),
 	]
 }
 
