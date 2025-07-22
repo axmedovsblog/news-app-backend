@@ -37,6 +37,11 @@ class NewsController {
 			throw new HttpException(StatusCodes.BAD_REQUEST, "Image  file not found")
 
 		}
+		if (save_file.is_use) {
+			throw new HttpException(
+				StatusCodes.BAD_REQUEST,
+				"Image file is in use " + save_file.where_used)
+		}
 		await NewsModel.create({
 			title,
 			desc,
@@ -49,14 +54,31 @@ class NewsController {
 	//  update
 	static update = async (req, res) => {
 		const { id } = req.params
-		const { title, desc } = req.body
+		const { title, desc, image } = req.body
 
 		const news = await NewsModel.findById(id)
 		if (!news) {
 			throw new HttpException(StatusCodes.NOT_FOUND, "Not a found")
 		}
-
 		const updateNews = {}
+
+		if (image && image !== news.image) {
+			const save_file = await SaveFileModel.findOne({ file_path: image })
+			if (!save_file) {
+				throw new HttpException(
+					StatusCodes.BAD_REQUEST,
+					"Image file not found!")
+			}
+			if (save_file.is_use) {
+				throw new HttpException(
+					StatusCodes.BAD_REQUEST,
+					"Image file is in use " + save_file.where_used)
+
+			}
+			updateNews.image = image
+		}
+
+
 		if (title && title !== news.title) {
 			const existingNews = await NewsModel.findOne({ title })
 			if (existingNews) {
@@ -70,7 +92,16 @@ class NewsController {
 		}
 
 		const data = await NewsModel.findByIdAndUpdate(id, updateNews, { new: true })
-
+		if (image && image !== news.image) {
+			await SaveFileModel.updateOne(
+				{ file_path: news.image },
+				{ is_use: false, where_used: "" }
+			);
+			await SaveFileModel.updateOne(
+				{ file_path: image },
+				{ is_use: true, where_used: "news" }
+			);
+		}
 		res.status(200).json({ success: true, msg: data })
 	}
 
@@ -86,10 +117,10 @@ class NewsController {
 		// await NewsModel.findByIdAndDelete(id) // 1 - usuli 
 		await news.deleteOne() // 2 - usuli 
 
-   await SaveFileModel.updateOne(
-		{file_path: news.image},
-		{is_use: false, where_used: ""}
-	)
+		await SaveFileModel.updateOne(
+			{ file_path: news.image },
+			{ is_use: false, where_used: "" }
+		)
 
 		res.status(200).json({ success: true, msg: "News deleted" })
 	}
