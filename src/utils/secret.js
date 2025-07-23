@@ -8,7 +8,7 @@ const AWS_URL = process.env.AWS_URL
 const AWS_REGION = process.env.AWS_REGION
 const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME
 const REG_KEY = process.env.REG_KEY
-
+const JWT_SECRET = process.env.JWT_SECRET
 module.exports = { 
 	port,
 	MONGO_URI ,
@@ -17,6 +17,7 @@ module.exports = {
 	AWS_REGION,
 	AWS_SECRET_ACCSESS_KEY,
 	AWS_URL,
-	REG_KEY
+	REG_KEY,
+	JWT_SECRET
 }
 

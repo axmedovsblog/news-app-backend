@@ -17,6 +17,12 @@ class UserValidator {
 		body('reg_key', 'Registration key is required.').notEmpty(),
 		body('reg_key', 'Registration key must be string.').isString(),
 	];	
+	static login = () => [
+		body('email', 'Email is required.').notEmpty(),
+		body('email', 'Email must a valid email address').isEmail(),
+		body('password','Password is required').notEmpty(),
+		body('password','Password must be at least 8 characters long.').isLength({min: 8}),
+	]
 }
 
 

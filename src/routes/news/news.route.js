@@ -5,6 +5,7 @@ const newsRouter = new Router()
 
 const { expressValidate } = require("../../validators/index.js")
 const { NewsValidator } = require("../../validators/news/news.validator.js")
+const { authMiddleware } = require('../../middlewares/auth.middleware.js')
 
 newsRouter.get(
 	"/get-all",
@@ -18,18 +19,21 @@ newsRouter.get(
 )
 newsRouter.post(
 	"/add",
+	authMiddleware,
 	NewsValidator.add(),
 	expressValidate,
 	NewsController.add
 )
 newsRouter.put(
 	"/update/:id",
+	authMiddleware,
 	NewsValidator.update(),
 	expressValidate,
 	NewsController.update
 )
 newsRouter.delete(
 	"/delete/:id",
+	authMiddleware,
 	NewsValidator.getById(),
 	expressValidate,
 	NewsController.delete
