@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { CollectionNames } from '../../utils/constants.js'
 
 const { Schema, model } = mongoose
 
@@ -15,4 +16,8 @@ const documentSchema = new Schema(
   { versionKey: false }
 )
 
-export const SaveFileModel = model("save-file", documentSchema, "save_file")
+export const SaveFileModel = model(
+  CollectionNames.SAVE_FILE,
+  documentSchema,
+  CollectionNames.SAVE_FILE
+)

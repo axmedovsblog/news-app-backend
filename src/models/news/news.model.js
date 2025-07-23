@@ -1,21 +1,26 @@
 const { Schema, model } = require("mongoose")
+const { CollectionNames } = require('../../utils/constants.js')
 
-const newsSchema = new Schema(
+const documentSchema = new Schema(
   {
     title: {
       type: String,
       required: true,
     },
     desc: {
-    type: String, required: true
+      type: String, required: true
     },
     image: {
       type: String, required: true
-      }
+    }
   }, {
   timestamps: true, versionKey: false
 })
 
-const NewsModel = model('news', newsSchema, 'news')
+const NewsModel = model(
+  CollectionNames.NEWS,
+  documentSchema,
+  CollectionNames.NEWS
+)
 
 module.exports = { NewsModel }

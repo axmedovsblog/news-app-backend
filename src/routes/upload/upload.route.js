@@ -8,7 +8,7 @@ const { UploadController } = require('../../controller/upload/upload.controller.
 uploadRouter.post(
 	"/",
 	expressValidate,
-	uploadFile.single("image"),
+	uploadFile.single("file"),
 	UploadController.uploadFile
 )
 

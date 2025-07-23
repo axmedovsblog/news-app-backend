@@ -7,6 +7,8 @@ const AWS_SECRET_ACCSESS_KEY = process.env.AWS_SECRET_ACCSESS_KEY
 const AWS_URL = process.env.AWS_URL
 const AWS_REGION = process.env.AWS_REGION
 const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME
+const REG_KEY = process.env.REG_KEY
+
 module.exports = { 
 	port,
 	MONGO_URI ,
@@ -14,6 +16,7 @@ module.exports = {
 	AWS_BUCKET_NAME,
 	AWS_REGION,
 	AWS_SECRET_ACCSESS_KEY,
-	AWS_URL
+	AWS_URL,
+	REG_KEY
 }
 
