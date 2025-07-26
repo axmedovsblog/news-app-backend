@@ -11,6 +11,7 @@ const documentSchema = new Schema(
       type: String,
       enum: ['news'],
     },
+    user: {type: Object},
     created_at: { type: Date, default: Date.now },
   },
   { versionKey: false }

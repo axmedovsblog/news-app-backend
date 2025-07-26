@@ -2,6 +2,7 @@ const { NewsModel } = require('../../models/news/news.model')
 const { SaveFileModel } = require('../../models/save-file/save-file.model.js')
 const { HttpException } = require('../../utils/http-exception.js')
 const { StatusCodes } = require("http-status-codes")
+const {UserModel} = require("../../models/user/user.modul.js")
 const fs = require("fs")
 const path = require("path")
 const { error } = require('console')
@@ -24,6 +25,7 @@ class NewsController {
 	// add
 	static add = async (req, res) => {
 		const { title, desc, image } = req.body
+		const {user_id} = req.user
 
 		const existingNews = await NewsModel.findOne({ title })
 
@@ -48,8 +50,10 @@ class NewsController {
 			image,
 		})
 		res.status(StatusCodes.CREATED).json({ success: true, msg: "news created!" })
+		const user = await UserModel.findById(user_id);
 
-		await save_file.updateOne({ is_use: true, where_used: "news" })
+
+		await save_file.updateOne({ is_use: true, where_used: "news" , user: user})
 	};
 	//  update
 	static update = async (req, res) => {

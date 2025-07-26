@@ -44,6 +44,33 @@ class UserController {
 			.status(StatusCodes.CREATED)
 			.json({ succsess: true, msg: "Admin use created succsessfuly" })
 	}
+	static signUp = async (req, res) => {
+		const {
+			name,
+			email,
+			password
+		} = req.body
+
+		const existingUser = await UserModel.findOne({ email })
+
+		if (existingUser) {
+			throw new HttpException(
+				StatusCodes.CONFLICT,
+				"User email already exists"
+			)
+		}
+		const salt = await genSalt(10)
+		const hashedPassword = await hash(password, salt)
+
+		await UserModel.create({
+			name,
+			email,
+			password: hashedPassword,
+		})
+		return res
+			.status(StatusCodes.CREATED)
+			.json({ succsess: true, msg: "User created succsessfuly" })
+	}
 	static login = async (req, res) => {
 		const { email, password } = req.body
 		const user = await UserModel.findOne({ email })

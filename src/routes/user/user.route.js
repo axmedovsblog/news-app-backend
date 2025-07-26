@@ -12,6 +12,12 @@ userRouter.post(
 	UserController.signUpAdmin
 )
 userRouter.post(
+	"/signup",
+	UserValidator.signUp(),
+	expressValidate,
+	UserController.signUp
+)
+userRouter.post(
 	"/login",
 	UserValidator.login(),
 	expressValidate,
