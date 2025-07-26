@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose")
+const { Schema, model, SchemaType } = require("mongoose")
 const { CollectionNames } = require('../../utils/constants.js')
 
 const documentSchema = new Schema(
@@ -12,7 +12,10 @@ const documentSchema = new Schema(
     },
     image: {
       type: String, required: true
-    }
+    },
+    user:{
+      type: Schema.Types.ObjectId, ref: CollectionNames.USER
+    },
   }, {
   timestamps: true, versionKey: false
 })

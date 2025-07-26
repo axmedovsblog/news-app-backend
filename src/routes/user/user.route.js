@@ -3,6 +3,8 @@ const { UserController } = require('../../controller/user/user.controller')
 const { UserValidator } = require('../../validators/user/user.validator')
 const { expressValidate } = require('../../validators/index.js')
 const { authMiddleware } = require('../../middlewares/auth.middleware.js')
+const { roleMiddleware } = require('../../middlewares/role.middleware.js')
+const { RoleCollection } = require('../../utils/constants.js')
 const userRouter = new Router()
 
 userRouter.post(
@@ -28,6 +30,13 @@ userRouter.get(
 	"/me",
   authMiddleware,
 	UserController.me
+);
+
+userRouter.get(
+	"/users",
+  authMiddleware,
+	roleMiddleware([RoleCollection.ADMIN]),
+	UserController.getAllUsers
 );
 
 module.exports = { userRouter }

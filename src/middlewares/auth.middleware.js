@@ -13,7 +13,6 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
 
 	const decoded = jwt.verify(token, JWT_SECRET)
 	req.user = { user_id: decoded.user_id }
-
 	next()
 })
 

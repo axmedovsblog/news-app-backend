@@ -105,8 +105,40 @@ class UserController {
 				"User not found"
 			)
 		}
-    return res.status(StatusCodes.OK).json({succsess: true , data: user})
+		return res.status(StatusCodes.OK).json({ succsess: true, data: user })
 	};
-}
+	static getAllUsers = async (req, res) => {
+		const { search, page = 1, limit = 10 } = req.query
 
+		const query = {}
+
+		if (search && search.length > 0) {
+			query.$or = [
+				{ name: { $regex: search, $options: "i" } },
+				{ email: { $regex: search, $options: "i" } },
+			]
+		}
+
+		const users = await UserModel.find(query)
+			.select("-password")
+			.skip((page - 1) * limit)
+			.limit(limit)
+
+		const totalUsers = await UserModel.countDocuments(query)
+
+		return res.status(StatusCodes.OK).json({
+			succsess: true,
+			data: users,
+			pagination: {
+				currentPage: Number(page),
+				totalItems: totalUsers,
+				page: Number(page),
+				limit: Number(limit),
+				totalPages: Math.ceil(totalUsers / limit),
+				hasNextPage: (page - 1) * limit + users.length < totalUsers,
+				hasPrevPage: page > 1,
+			}
+		})
+	}
+}
 module.exports = { UserController }
