@@ -1,4 +1,3 @@
-
 class HttpException extends Error {
 	constructor(status_code, msg){
 		super(msg);

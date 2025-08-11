@@ -17,6 +17,7 @@ void ConnectdB()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({origin: ["http://localhost:5173", "http://localhost:5174"]}))
+
 // barcha fayllarni static qilish
 // app.use(express.static("public"))
 

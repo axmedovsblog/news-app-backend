@@ -2,23 +2,6 @@ const multer = require("multer")
 const path = require("path")
 const { HttpException } = require('./http-exception.js')
 
-//  diskStorage - vazifasi bizga fileni saqlash uchun kerak bo'ladi
-// destination - esa file ni yo'lini korsatadi
-
-// const storage = multer.diskStorage({
-// 	destination: (req, file, cb) => {
-// 		if (file.fieldname === "image") {
-// 			cb(null, "./public/uploads/images")
-// 		}
-// 		if (file.fieldname === "vedio") {
-// 			cb(null, "./public/uploads/vedios")
-// 		}
-// 	},
-// 	filename: (req, file, cb) => {
-// 		const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9)
-// 		cb(null, uniqueSuffix + path.extname(file.originalname))
-// 	}
-// })
 
 const checkFileType = (file, cb) => {
 	// regex deyiladi bu narsa

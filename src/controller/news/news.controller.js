@@ -97,7 +97,7 @@ class NewsController {
 	//  update
 	static update = async (req, res) => {
 		const { id } = req.params
-		const { title, desc, image } = req.body
+		const { name, desc, image } = req.body
 		const { user_id } = req.user
 
 		const news = await NewsModel.findById(id)
@@ -131,13 +131,13 @@ class NewsController {
 		}
 
 
-		if (title && title !== news.title) {
-			const existingNews = await NewsModel.findOne({ title })
+		if (name && name !== news.name) {
+			const existingNews = await NewsModel.findOne({ name })
 			if (existingNews) {
 				throw new HttpException(StatusCodes.CONFLICT, "News with this title already exists!")
 
 			}
-			updateNews.title = title
+			updateNews.name = name
 		}
 		if (desc && desc !== news.desc) {
 			updateNews.desc = desc

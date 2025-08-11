@@ -10,7 +10,7 @@ class UploadController {
 		const uploadedFile = req.file
 
 		if (!uploadedFile) {
-			throw new HttpException(StatusCodes.NOT_FOUND, 'File  not provided '
+			throw new HttpException(StatusCodes.NOT_FOUND, 'File  not provided'
 			)
 		}
    let file_name = v4() + path.extname(uploadedFile.originalname);
@@ -59,6 +59,5 @@ class UploadController {
     }
   };
 }
-
 
 module.exports = { UploadController }

@@ -1,5 +1,6 @@
 const { config } = require("dotenv")
 config()
+
 const port = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
 const AWS_ACCSESS_KEY_ID = process.env.AWS_ACCSESS_KEY_ID;
@@ -20,4 +21,3 @@ module.exports = {
 	REG_KEY,
 	JWT_SECRET
 }
-
