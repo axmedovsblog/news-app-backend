@@ -1,4 +1,5 @@
-import mongoose from "mongoose"
+const mongoose = require("mongoose");
+
 import { CollectionNames } from '../../utils/constants.js'
 
 const { Schema, model } = mongoose
